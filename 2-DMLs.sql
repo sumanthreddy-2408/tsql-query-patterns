@@ -33,6 +33,18 @@ VALUES
 ;
 
 -- PATTERN-5 [Sessionization]
+INSERT INTO P5_Events (EventId,UserId,EventType,EventTimestamp) 
+VALUES 
+	(40001,2001,'view','2024-01-01 10:00:00'),
+	(40002,2001,'click','2024-01-01 10:31:00'),
+	(40003,2001,'view','2024-01-01 10:55:00'),
+	(40004,2001,'view','2024-01-01 11:06:00'),
+	(40005,2001,'view','2024-01-01 11:12:00'),
+	(40006,2001,'view','2024-01-01 11:44:00'),
+	(40015,2004,'view','2024-01-01 10:00:00'),
+	(40016,2004,'click','2024-01-01 10:30:00'),
+	(40017,2004,'purchase','2024-01-01 10:43:00')
+;
 
 -- PATTERN-6 [Funnel Analysis]
 INSERT INTO P6_EVENTS (EventId,UserId,EventType,EventDate) 

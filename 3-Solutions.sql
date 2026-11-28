@@ -55,6 +55,33 @@ ORDER BY UserId ASC, StreakStart ASC
 ;
 
 -- PATTERN-5 [Sessionization]
+WITH UserSessions AS (
+	SELECT 
+		*,
+		SUM(NewSessionInd) OVER(PARTITION BY UserId ORDER BY EventTimestamp ASC ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW) AS SessionId
+	FROM (
+		SELECT 
+			*,
+			(
+				CASE 
+					WHEN (LAG(EventTimestamp) OVER(PARTITION BY UserId ORDER BY EventTimestamp ASC)) IS NULL OR 
+						DATEDIFF(MINUTE, LAG(EventTimestamp) OVER(PARTITION BY UserId ORDER BY EventTimestamp ASC) , EventTimestamp ) > 30 THEN 1 
+					ELSE 0
+				END 
+			) AS NewSessionInd
+		FROM [dbo].[P5_Events]
+	) T 
+) 
+SELECT 
+	UserId,
+	SessionId,
+	MIN(EventTimestamp) AS SessionStart,
+	MAX(EventTimestamp) AS SessionEnd,
+	COUNT(EventId) AS EventCount 
+FROM UserSessions 
+GROUP BY UserId, SessionId 
+ORDER BY UserId ASC, SessionId ASC 
+;
 
 -- PATTERN-6 [Funnel Analysis]
 WITH UserStats AS (

@@ -28,6 +28,12 @@ CREATE TABLE P4_Logins (
 ;
 
 -- PATTERN-5 [Sessionization]
+CREATE TABLE P5_Events (
+	EventId INT,
+	UserId INT,
+	EventType VARCHAR(100),
+	EventTimestamp DATETIME2(0) 
+);
 
 -- PATTERN-6 [Funnel Analysis]
 CREATE TABLE P6_Events (
