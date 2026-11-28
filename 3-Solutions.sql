@@ -177,6 +177,23 @@ ORDER BY CohortMonth ASC, MonthNumber ASC
 ;
 
 -- PATTERN-8 [Top-N per Group]
+WITH RankedData AS (
+	SELECT 
+		*,
+		DENSE_RANK() OVER(PARTITION BY Region ORDER BY TotalRevenue DESC) AS RegionRank 
+	FROM (
+		SELECT 
+			Region,
+			ProductName,
+			SUM(Revenue) AS TotalRevenue
+		FROM [dbo].[P8_Sales]
+		GROUP BY Region, ProductName 
+	) T 
+)
+SELECT * FROM RankedData 
+WHERE RegionRank <= 3 
+ORDER BY Region ASC, RegionRank ASC, ProductName ASC  
+;
 
 -- PATTERN-9 [Pivot & Cross-Tab]
 SELECT 

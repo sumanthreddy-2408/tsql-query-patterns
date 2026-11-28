@@ -57,6 +57,14 @@ CREATE TABLE P7_Transactions (
 );
 
 -- PATTERN-8 [Top-N per Group]
+CREATE TABLE P8_Sales (
+	SaleId INT,
+	Region VARCHAR(100),
+	ProductName VARCHAR(100),
+	Revenue INT,
+	SaleDate DATE 
+)
+;
 
 -- PATTERN-9 [Pivot & Cross-Tab]
 CREATE TABLE P9_Sales (

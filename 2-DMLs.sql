@@ -86,6 +86,17 @@ VALUES
 ;
 
 -- PATTERN-8 [Top-N per Group]
+INSERT INTO P8_Sales(SaleId,Region,ProductName,Revenue,SaleDate) 
+VALUES 
+	(1,'North','Laptop',1000,'2024-01-01'),
+	(2,'North','Laptop',500,'2024-01-02'),
+	(3,'North','Monitor',800,'2024-01-01'),
+	(4,'North','Tablet',800,'2024-01-01'),
+	(5,'North','Mouse',200,'2024-01-01'),
+	(6,'South','Phone',900,'2024-01-01'),
+	(7,'South','Tablet',700,'2024-01-01'),
+	(8,'South','Watch',600,'2024-01-01')
+;
 
 -- PATTERN-9 [Pivot & Cross-Tab]
 INSERT INTO P9_Sales ([SaleId],[Product],[Region],[Amount])
