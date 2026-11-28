@@ -32,6 +32,27 @@ ORDER BY SignupYear ASC
 ;
 
 -- PATTERN-4 [Gaps and Islands]
+WITH LoginsDeDupe AS (
+	SELECT DISTINCT 
+		UserId,
+		LoginDate 
+	FROM [dbo].[P4_Logins] 
+)
+SELECT 
+	UserId,
+	MIN(LoginDate) AS StreakStart,
+	MAX(LoginDate) AS StreakEnd,
+	COUNT(*) AS StreakDays 
+FROM (
+	SELECT 
+		*,
+		DATEADD(DAY,-(ROW_NUMBER() OVER(PARTITION BY UserId ORDER BY LoginDate ASC)),LoginDate) AS GroupID  
+	FROM LoginsDeDupe 
+) T  
+GROUP BY UserId, GroupId 
+HAVING COUNT(*) >= 3 
+ORDER BY UserId ASC, StreakStart ASC 
+;
 
 -- PATTERN-5 [Sessionization]
 

@@ -20,6 +20,17 @@ VALUES
 ;
 
 -- PATTERN-4 [Gaps and Islands]
+INSERT INTO P4_Logins (UserId,LoginId,LoginDate) 
+VALUES 
+	(1,1,'2024-01-01'),
+	(1,2,'2024-01-02'),
+	(1,3,'2024-01-03'),
+	(2,4,'2024-01-01'),
+	(2,5,'2024-01-02'),
+	(3,6,'2024-01-05'),
+	(3,7,'2024-01-06'),
+	(3,8,'2024-01-07')
+;
 
 -- PATTERN-5 [Sessionization]
 

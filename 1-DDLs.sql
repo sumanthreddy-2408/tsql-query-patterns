@@ -20,6 +20,12 @@ CREATE TABLE P3_Hosts (
 ;
 
 -- PATTERN-4 [Gaps and Islands]
+CREATE TABLE P4_Logins (
+	UserId INT,
+	LoginId INT,
+	LoginDate DATE 
+)
+;
 
 -- PATTERN-5 [Sessionization]
 
