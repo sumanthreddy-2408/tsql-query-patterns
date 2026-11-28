@@ -15,7 +15,7 @@ WITH YearlyHosts AS (
 		SELECT 
 			*,
 			YEAR(SignupDate) AS SignupYear
-		FROM P3_Hosts
+		FROM [dbo].[P3_Hosts]
 	) T 
 	GROUP BY SignupYear
 )
@@ -91,6 +91,42 @@ ORDER BY FunnelStageOrder ASC
 ;
 
 -- PATTERN-7 [Retention Cohorts]
+WITH UserCohorts AS (
+	SELECT 
+		UserId,
+		DATETRUNC(MONTH,MIN(TransactionDate)) AS CohortMonth
+	FROM [dbo].[P7_Transactions]
+	GROUP BY UserId
+),
+CohortSizes AS (
+	SELECT 
+		CohortMonth,
+		COUNT(UserId) AS CohortSize 
+	FROM UserCohorts   
+	GROUP BY CohortMonth
+),
+TransactionsWithCohortDetails AS (
+	SELECT 
+		T.UserId,
+		UC.CohortMonth,
+		CS.CohortSize,
+		DATETRUNC(MONTH,T.TransactionDate) AS TransactionMonth,
+		DATEDIFF(MONTH,UC.CohortMonth,DATETRUNC(MONTH,T.TransactionDate)) AS MonthNumber 
+	FROM [dbo].[P7_Transactions] T
+	INNER JOIN UserCohorts UC 
+		ON T.UserId = UC.UserId 
+	INNER JOIN CohortSizes CS 
+		ON UC.CohortMonth = CS.CohortMonth
+)
+SELECT 
+	FORMAT(CohortMonth,'yyyy-MM') AS CohortMonth,
+	MonthNumber,
+	COUNT(DISTINCT UserId) AS ActiveUsers,
+	CAST( ( (CAST(COUNT(DISTINCT UserId) AS FLOAT) / MAX(CohortSize) ) * 100 ) AS DECIMAL(38,2) ) AS RetentionRate  
+FROM TransactionsWithCohortDetails 
+GROUP BY CohortMonth, MonthNumber 
+ORDER BY CohortMonth ASC, MonthNumber ASC 
+;
 
 -- PATTERN-8 [Top-N per Group]
 
