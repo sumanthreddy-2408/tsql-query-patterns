@@ -76,6 +76,13 @@ CREATE TABLE P9_Sales (
 ;
 
 -- PATTERN-10 [Self Joins]
+CREATE TABLE P10_Employees (
+	EmployeeId INT,
+	ManagerId INT,
+	[Name] VARCHAR(50),
+	Salary INT 
+)
+;
 
 -- PATTERN-11 [Hierarchy Traversal]
 

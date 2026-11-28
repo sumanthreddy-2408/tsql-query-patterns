@@ -208,6 +208,15 @@ ORDER BY [Product] ASC
 ;
 
 -- PATTERN-10 [Self Joins]
+SELECT 
+	E.[Name] AS EmployeeName,
+	M.[Name] AS ManagerName 
+FROM [dbo].[P10_Employees] E
+INNER JOIN [dbo].[P10_Employees] M 
+	ON E.ManagerId = M.EmployeeId
+WHERE E.Salary > M.Salary 
+ORDER BY E.EmployeeId ASC 
+;
 
 -- PATTERN-11 [Hierarchy Traversal]
 

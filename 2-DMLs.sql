@@ -112,6 +112,14 @@ VALUES
 ;
 
 -- PATTERN-10 [Self Joins]
+INSERT INTO P10_Employees (EmployeeId,ManagerId,[Name],Salary) 
+VALUES 
+	(101,NULL,'CEO',100000),
+	(102,101,'Alice',80000),
+	(103,101,'Bob',110000),
+	(104,102,'Charlie',85000),
+	(105,102,'Diana',70000) 
+;
 
 -- PATTERN-11 [Hierarchy Traversal]
 
